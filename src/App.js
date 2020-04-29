@@ -2,11 +2,8 @@ import React from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import Home from './containers/Home'
+  Route
+} from 'react-router-dom';
 
 import NavBar from './components/NavBar'
 import Form from './components/Form'
@@ -15,9 +12,7 @@ import EquipmentsContainer from './containers/EquipmentsContainer'
 class App extends React.Component {
 
   state = {
-
     user: {
-      id: 0,
       username: "",
       orders: []
     },
@@ -25,58 +20,25 @@ class App extends React.Component {
     equipments: []
   }
 
-  componentDidMount(){
-
-    if (localStorage.token) {
-
-      fetch("http://localhost:4000/persist", {
-        headers: {
-          "Authorization": `bearer ${localStorage.token}`
-        }
-      })
-      .then(r => r.json())
-      .then(this.handleResponse)
+  componentDidMount() {
+   if (localStorage.token){
+     fetch("http://localhost:3000/persist", {
+       headers: {
+         "Authorization": `Bearer ${localStorage.token}`
+       }
+     })
+       .then(r => r.json())
+       .then(this.handleResp)
     }
 
-    fetch("http://localhost:4000/equipments")
-      .then(r => r.json())
-      .then(equipments => {
+    fetch("http://localhost:3000/equipments")
+      .then(r=> r.json())
+      .then((equipments) => {
         this.setState({
-          equipments: equipments
+          equipments
         })
       })
   }
-
-  handleLoginSubmit = (userInfo) => {
-    console.log("Login form has been submitted")
-
-    fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(userInfo)
-    })
-      .then(r => r.json())
-      .then(this.handleResponse)
-  }
-
-
-  handleRegisterSubmit = (userInfo) => {
-    console.log("Register form has been submitted")
-
-    fetch("http://localhost:4000/users", {
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(userInfo)
-    })
-      .then(r => r.json())
-      .then(this.handleResponse)
-  }
-
-
 
   handleLogout = () => {
     this.setState({
@@ -89,83 +51,70 @@ class App extends React.Component {
     })
     localStorage.clear()
   }
+  
 
-
-  handleResponse = (resp) => {
-    if (!resp.message) {
-      localStorage.token = resp.token
-      this.setState({
-        user: resp.user,
-        token: resp.token
-      }, () => {
-        this.props.history.push("/equipments")
-      })
-    }
-    else {
-      alert(resp.message)
-    }
-
+  handleResp = (resp) => {
+   if (resp.user) {
+     localStorage.token = resp.token
+     this.setState(resp, () => {
+       this.props.history.push("/equipments")
+     })
+   }
+   else {
+     alert(resp.error)
+   }
   }
 
+  handleLoginSubmit = (userInfo) => {
+   fetch(`http://localhost:3000/login`, {
+     method: "POST",
+     headers: {
+       "content-type": "application/json"
+     },
+     body: JSON.stringify(userInfo)
+   })
+     .then(res => res.json())
+     .then(this.handleResp)
+  }
+
+  handleRegisterSubmit = (userInfo) => {
+   fetch(`http://localhost:3000/users`, {
+     method: "POST",
+     headers: {
+       "content-type": "application/json"
+     },
+     body: JSON.stringify(userInfo)
+   })
+     .then(res => res.json())
+     .then(this.handleResp)
+  }
 
   renderForm = (routerProps) => {
-    if(routerProps.location.pathname === "/login"){
-      return <Form formName="Login Form" handleSubmit={this.handleLoginSubmit}/>
-    } else if (routerProps.location.pathname === "/register") {
-      return <Form formName="Register Form" handleSubmit={this.handleRegisterSubmit}/>
-    }
-  }
-
-
-
-  renderProfile = (routerProps) => {
-
-    if (this.state.token) {
-      return <EquipmentsContainer
-        equipments={this.state.equipments}
-        user={this.state.user}
-        token={this.state.token}
-        addNewOrder={this.addNewOrder}
-      />
-    } else {
-      return <Redirect to="/login"/>
-    }
-  }
-
-
-
-
-  addNewOrder = (newlyCreatedOrder) => {
-    let copy = [...this.state.user.orders, newlyCreatedOrder]
-
-    this.setState({
-      user: {
-        ...this.state.user,
-        orders: copy
-      }
-    })
-  }
-
-
-
+     if(routerProps.location.pathname === "/login"){
+       return <Form formName="Login Form" handleSubmit={this.handleLoginSubmit}/>
+     } else if (routerProps.location.pathname === "/register") {
+       return <Form formName="Register Form" handleSubmit={this.handleRegisterSubmit}/>
+     }
+   }
 
   render(){
     return (
-       <Router>
-         <div className="App">
-        <NavBar/>
-        {this.state.token && <button onClick={this.handleLogout}>Log out</button>}
+      <Router>
+      <div className="App">
+        <NavBar />
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
-          <Route path="/equipments" render={ this.renderProfile } />
-          <Route path="/" exact render={ Home } />
-        </div>  
-       </Router>
-     
+          <Route path="/equipments">
+            <EquipmentsContainer
+              Equipments={this.state.equipments}
+              user={this.state.user}
+              token={this.state.token}
+            />
+          </Route>
+      </div>
+      </Router>
     )
   }
 
 }
-
 export default App;
-// User -< Routine -< ExerciseRoutine >- Exercise 
