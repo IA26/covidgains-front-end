@@ -7,7 +7,7 @@ import {
 
 import NavBar from './components/NavBar'
 import Form from './components/Form'
-import EquipmentsContainer from './containers/EquipmentsContainer'
+import EquipmentContainer from './containers/EquipmentContainer'
 
 class App extends React.Component {
 
@@ -22,7 +22,7 @@ class App extends React.Component {
 
   componentDidMount() {
    if (localStorage.token){
-     fetch("http://localhost:3000/persist", {
+     fetch("http://localhost:4000/persist", {
        headers: {
          "Authorization": `Bearer ${localStorage.token}`
        }
@@ -31,7 +31,7 @@ class App extends React.Component {
        .then(this.handleResp)
     }
 
-    fetch("http://localhost:3000/equipments")
+    fetch("http://localhost:4000/equipments")
       .then(r=> r.json())
       .then((equipments) => {
         this.setState({
@@ -66,7 +66,7 @@ class App extends React.Component {
   }
 
   handleLoginSubmit = (userInfo) => {
-   fetch(`http://localhost:3000/login`, {
+   fetch(`http://localhost:4000/login`, {
      method: "POST",
      headers: {
        "content-type": "application/json"
@@ -78,7 +78,7 @@ class App extends React.Component {
   }
 
   handleRegisterSubmit = (userInfo) => {
-   fetch(`http://localhost:3000/users`, {
+   fetch(`http://localhost:4000/users`, {
      method: "POST",
      headers: {
        "content-type": "application/json"
@@ -105,7 +105,7 @@ class App extends React.Component {
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
           <Route path="/equipments">
-            <EquipmentsContainer
+            <EquipmentContainer
               Equipments={this.state.equipments}
               user={this.state.user}
               token={this.state.token}
