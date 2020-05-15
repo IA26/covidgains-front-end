@@ -1,9 +1,6 @@
 import React from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Route
-} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom'
 
 import NavBar from './components/NavBar'
 import Form from './components/Form'
@@ -97,24 +94,25 @@ class App extends React.Component {
      }
    }
 
-  render(){
+   render(){
     return (
-      <Router>
       <div className="App">
-        <NavBar />
+        <NavBar/>
+        <Switch>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
           <Route path="/equipments">
             <EquipmentContainer
-              Equipments={this.state.equipments}
+              equipments={this.state.equipments}
               user={this.state.user}
               token={this.state.token}
             />
           </Route>
+        </Switch>
       </div>
-      </Router>
     )
   }
 
 }
-export default App;
+
+export default withRouter(App)  ;
