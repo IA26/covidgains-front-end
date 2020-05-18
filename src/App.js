@@ -98,6 +98,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <NavBar/>
+        {this.state.token && <button onClick={this.handleLogout}>Log out</button>}
         <Switch>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
@@ -111,7 +112,7 @@ class App extends React.Component {
         </Switch>
       </div>
     )
-  }
+  } 
 
 }
 
