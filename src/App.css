@@ -39,7 +39,27 @@
 
 .nav {
   list-style-type: none;
+  float: left;
   margin: 0;
   padding: 0;
   border-right: 1px solid #bbb;
+}
+
+.equipment-picture {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 15rem;
+  height: 25rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+}
+
+#all-equipment {
+  margin: 2rem;
+  float: left;
+}
+
+.purchase-btn {
+  text-align: center;
 }

@@ -2,6 +2,11 @@ import React from 'react';
 import {NavLink} from 'react-router-dom'
 
 const NavBar = () => {
+
+  // handleLogOut() = () => {
+
+  // }
+
   return(
     <ul className="nav">
       <li>
@@ -14,7 +19,10 @@ const NavBar = () => {
         <NavLink to="/register">Register</NavLink>
       </li>
       <li>
-        <NavLink to="/equipments">Profile</NavLink>
+        <NavLink to="/equipments">Equipment</NavLink>
+      </li>
+      <li>
+        <NavLink to="/logout">Logout</NavLink>
       </li>
     </ul>
   )

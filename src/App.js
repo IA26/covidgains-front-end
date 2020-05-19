@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {Switch, Route, withRouter} from 'react-router-dom'
 
+import Home from './containers/Home'
 import NavBar from './components/NavBar'
 import Form from './components/Form'
 import EquipmentContainer from './containers/EquipmentContainer'
@@ -94,12 +95,22 @@ class App extends React.Component {
      }
    }
 
+
+   handleImageClick = (e) => {
+     console.log(e.name)
+   }
+
+
+
+
+
    render(){
     return (
       <div className="App">
-        <NavBar/>
+        <NavBar logout={this.handleLogout}/>
         {this.state.token && <button onClick={this.handleLogout}>Log out</button>}
         <Switch>
+          <Route exact path="/" render component={ Home }/>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
           <Route path="/equipments">
@@ -107,6 +118,7 @@ class App extends React.Component {
               equipments={this.state.equipments}
               user={this.state.user}
               token={this.state.token}
+              handleImageClick={this.handleImageClick}
             />
           </Route>
         </Switch>
