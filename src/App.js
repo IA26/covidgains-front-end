@@ -1,16 +1,18 @@
 import React from 'react';
 import './App.css';
-import {Switch, Route, withRouter} from 'react-router-dom'
+import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
 
 import Home from './containers/Home'
 import NavBar from './components/NavBar'
 import Form from './components/Form'
 import EquipmentContainer from './containers/EquipmentContainer'
+import EquipmentContainers from './containers/EquipmentContainers'
 
 class App extends React.Component {
 
   state = {
     user: {
+      id: 0, 
       username: "",
       orders: []
     },
@@ -20,7 +22,7 @@ class App extends React.Component {
 
   componentDidMount() {
    if (localStorage.token){
-     fetch("http://localhost:4000/persist", {
+     fetch("http://localhost:4001/persist", {
        headers: {
          "Authorization": `Bearer ${localStorage.token}`
        }
@@ -29,7 +31,7 @@ class App extends React.Component {
        .then(this.handleResp)
     }
 
-    fetch("http://localhost:4000/equipments")
+    fetch("http://localhost:4001/equipments")
       .then(r=> r.json())
       .then((equipments) => {
         this.setState({
@@ -64,7 +66,7 @@ class App extends React.Component {
   }
 
   handleLoginSubmit = (userInfo) => {
-   fetch(`http://localhost:4000/login`, {
+   fetch(`http://localhost:4001/login`, {
      method: "POST",
      headers: {
        "content-type": "application/json"
@@ -76,7 +78,7 @@ class App extends React.Component {
   }
 
   handleRegisterSubmit = (userInfo) => {
-   fetch(`http://localhost:4000/users`, {
+   fetch(`http://localhost:4001/users`, {
      method: "POST",
      headers: {
        "content-type": "application/json"
@@ -94,11 +96,21 @@ class App extends React.Component {
        return <Form formName="Register Form" handleSubmit={this.handleRegisterSubmit}/>
      }
    }
+   
+  renderProfile = (routerProps) => {
 
+    if (this.state.token) {
+      return <EquipmentContainers
+        equipments={this.state.equipments}
+        user={this.state.user}
+        token={this.state.token}
+        handlePurchaseEquipment={this.handlePurchaseEquipment}
+      />
+    } else {
+      return <Redirect to="/login"/>
+    }
+  }
 
-   handleImageClick = (e) => {
-     console.log(e.name)
-   }
 
 
 
@@ -113,18 +125,49 @@ class App extends React.Component {
           <Route exact path="/" render component={ Home }/>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
-          <Route path="/equipments">
-            <EquipmentContainer
-              equipments={this.state.equipments}
-              user={this.state.user}
-              token={this.state.token}
-              handleImageClick={this.handleImageClick}
-            />
+          <Route path="/equipments" render={ this.renderProfile }>
           </Route>
         </Switch>
       </div>
     )
   } 
+
+
+
+  handlePurchaseEquipment = (newlyCreatedOrder) => {
+    console.log(newlyCreatedOrder)
+
+    fetch('http://localhost:4001/orders', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `bearer ${newlyCreatedOrder.token}`,
+        },
+      body: JSON.stringify(newlyCreatedOrder)
+      }).then(res => res.json())
+         .then((newlyCreatedOrder) => {
+           let copy = [...this.state.user.orders, newlyCreatedOrder]
+
+            this.setState({
+             user: {
+             ...this.state.user,  
+                orders: copy
+      }
+    })
+
+  })
+
+  //   let copy = [...this.state.user.orders, newlyCreatedOrder]
+
+  //   this.setState({
+  //     user: {
+  //       ...this.state.user,
+  //       orders: copy
+  //     }
+  //   })
+  //   console.log(newlyCreatedOrder.equipment)
+  }
+  
 
 }
 
