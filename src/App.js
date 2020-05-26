@@ -111,6 +111,18 @@ class App extends React.Component {
     }
   }
 
+  renderUser = (routerProps) => {
+    if (this.state.token) {
+      return <UserProf
+        token={this.state.token}
+        handlePurchaseEquipment={this.handlePurchaseEquipment}
+      />
+    } else {
+      return <Redirect to="/login"/>
+    }
+  }
+
+
    render(){
     return (
       <div className="App">
@@ -121,7 +133,7 @@ class App extends React.Component {
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
           <Route path="/equipments" render={ this.renderProfile } />
-          <Route path="/profile" render={ Home } /> 
+          <Route path="/profile" render={ this.renderUser } /> 
         </Switch>
       </div>
     )

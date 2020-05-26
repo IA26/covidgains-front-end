@@ -8,15 +8,18 @@ const NavBar = (props) => {
   // }
   return(
     <ul className="nav">
+      {props.token ? null :
       <li>
         <NavLink to="/">Home</NavLink>
-      </li> 
+      </li>}
+      {props.token ? null :
       <li>
         <NavLink to="/login">Login</NavLink>
-      </li>
+      </li>}
+      {props.token ? null :
       <li>
         <NavLink to="/register">Register</NavLink>
-      </li>
+      </li>}
       {props.token ? 
       <li>
         <NavLink to="/equipments">Equipment</NavLink>
