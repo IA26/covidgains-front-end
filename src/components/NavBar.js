@@ -1,12 +1,11 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = (props) => {
 
   // handleLogOut() = () => {
 
   // }
-
   return(
     <ul className="nav">
       <li>
@@ -18,12 +17,18 @@ const NavBar = () => {
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
+      {props.token ? 
       <li>
         <NavLink to="/equipments">Equipment</NavLink>
-      </li>
+      </li> : null}
+      {props.token ? 
       <li>
-        <NavLink to="/logout">Logout</NavLink>
-      </li>
+        <NavLink to="/profile">Profile</NavLink>
+      </li> : null}
+      {props.token ?
+      <li>
+      <NavLink to="/logout">Logout</NavLink>
+      </li> :null}
     </ul>
   )
 };

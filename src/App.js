@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import Form from './components/Form'
 import EquipmentContainer from './containers/EquipmentContainer'
 import EquipmentContainers from './containers/EquipmentContainers'
+import UserProf from './containers/UserProf'
 
 class App extends React.Component {
 
@@ -98,7 +99,6 @@ class App extends React.Component {
    }
    
   renderProfile = (routerProps) => {
-
     if (this.state.token) {
       return <EquipmentContainer
         equipments={this.state.equipments}
@@ -111,22 +111,17 @@ class App extends React.Component {
     }
   }
 
-
-
-
-
-
    render(){
     return (
       <div className="App">
-        <NavBar logout={this.handleLogout}/>
+        <NavBar token ={this.state.token} />
         {this.state.token && <button onClick={this.handleLogout}>Log out</button>}
         <Switch>
           <Route exact path="/" render component={ Home }/>
           <Route path="/login" render={ this.renderForm } />
           <Route path="/register" render={ this.renderForm }/>
-          <Route path="/equipments" render={ this.renderProfile }>
-          </Route>
+          <Route path="/equipments" render={ this.renderProfile } />
+          <Route path="/profile" render={ Home } /> 
         </Switch>
       </div>
     )
@@ -134,10 +129,10 @@ class App extends React.Component {
 
 
 
-  handlePurchaseEquipment = (newlyCreatedOrder) => {
-    console.log(newlyCreatedOrder)
+  handlePurchaseEquipment = (newOrder) => {
+    // console.log(newlyCreatedOrder)
 
-    let copy = [...this.state.user.orders, newlyCreatedOrder]
+    let copy = [...this.state.user.orders, newOrder]
 
     this.setState({
       user: {
