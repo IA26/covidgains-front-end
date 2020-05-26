@@ -100,7 +100,7 @@ class App extends React.Component {
   renderProfile = (routerProps) => {
 
     if (this.state.token) {
-      return <EquipmentContainers
+      return <EquipmentContainer
         equipments={this.state.equipments}
         user={this.state.user}
         token={this.state.token}
@@ -137,35 +137,14 @@ class App extends React.Component {
   handlePurchaseEquipment = (newlyCreatedOrder) => {
     console.log(newlyCreatedOrder)
 
-    fetch('http://localhost:4001/orders', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `bearer ${newlyCreatedOrder.token}`,
-        },
-      body: JSON.stringify(newlyCreatedOrder)
-      }).then(res => res.json())
-         .then((newlyCreatedOrder) => {
-           let copy = [...this.state.user.orders, newlyCreatedOrder]
+    let copy = [...this.state.user.orders, newlyCreatedOrder]
 
-            this.setState({
-             user: {
-             ...this.state.user,  
-                orders: copy
+    this.setState({
+      user: {
+        ...this.state.user,
+        orders: copy
       }
-    })
-
-  })
-
-  //   let copy = [...this.state.user.orders, newlyCreatedOrder]
-
-  //   this.setState({
-  //     user: {
-  //       ...this.state.user,
-  //       orders: copy
-  //     }
-  //   })
-  //   console.log(newlyCreatedOrder.equipment)
+    })  
   }
   
 
