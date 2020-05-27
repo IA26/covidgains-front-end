@@ -3,9 +3,6 @@ import {NavLink} from 'react-router-dom'
 
 const NavBar = (props) => {
 
-  // handleLogOut() = () => {
-
-  // }
   return(
     <ul className="nav">
       {props.token ? null :

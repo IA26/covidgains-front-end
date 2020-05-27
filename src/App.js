@@ -6,7 +6,6 @@ import Home from './containers/Home'
 import NavBar from './components/NavBar'
 import Form from './components/Form'
 import EquipmentContainer from './containers/EquipmentContainer'
-import EquipmentContainers from './containers/EquipmentContainers'
 import UserProf from './containers/UserProf'
 
 class App extends React.Component {
@@ -114,8 +113,8 @@ class App extends React.Component {
   renderUser = (routerProps) => {
     if (this.state.token) {
       return <UserProf
+        user={this.state.user}
         token={this.state.token}
-        handlePurchaseEquipment={this.handlePurchaseEquipment}
       />
     } else {
       return <Redirect to="/login"/>
@@ -142,7 +141,7 @@ class App extends React.Component {
 
 
   handlePurchaseEquipment = (newOrder) => {
-    // console.log(newlyCreatedOrder)
+    console.log(newOrder)
 
     let copy = [...this.state.user.orders, newOrder]
 
