@@ -40,7 +40,8 @@ class App extends React.Component {
       })
   }
 
-  handleLogout = () => {
+  handleLogout = (navProps) => {
+    // console.log(navProps)
     this.setState({
       user: {
         id: 0,
@@ -50,6 +51,7 @@ class App extends React.Component {
       token: ""
     })
     localStorage.clear()
+
   }
   
 
@@ -124,9 +126,9 @@ class App extends React.Component {
 
    render(){
     return (
-      <div className="App">
-        <NavBar token ={this.state.token} />
-        {this.state.token && <button onClick={this.handleLogout}>Log out</button>}
+      <div className="App"  id="page-container">
+       <div id="content-wrap">
+        <NavBar token={ this.state.token } user ={ this.state.user } handleLogout={ this.handleLogout }/>
         <Switch>
           <Route exact path="/" render component={ Home }/>
           <Route path="/login" render={ this.renderForm } />
@@ -134,6 +136,8 @@ class App extends React.Component {
           <Route path="/equipments" render={ this.renderProfile } />
           <Route path="/profile" render={ this.renderUser } /> 
         </Switch>
+         <footer id="footer" className="centered">Rest in peace, mom. May 28th, 1961 - April 9th, 2020.</footer>
+        </div>
       </div>
     )
   } 

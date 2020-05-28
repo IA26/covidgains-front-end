@@ -24,14 +24,20 @@ class Form extends Component {
     let {username, password} = this.state
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>{formName}</h1>
+  <div>
+      <div className="centered">
+         <h2 id="form-header">{formName}</h2> 
+      </div>
+     <div id="form">
+      <form onSubmit={this.handleSubmit} className="form-inline">  
         <label htmlFor="username">Username:</label>
-        <input type="text" autoComplete="off" name="username" value={username} onChange={this.handleChange}/>
+        <input type="text" autoComplete="off" name="username" value={username} onChange={this.handleChange} className="form-control mr-sm-2" />
         <label htmlFor="password">Password:</label>
-        <input type="password" autoComplete="off" name="password" value={password} onChange={this.handleChange}/>
+        <input type="password" autoComplete="off" name="password" value={password} onChange={this.handleChange} className="form-control mr-sm-2" />
         <input type="submit" value="Submit" className="auth"/>
       </form>
+     </div>
+   </div>
     );
   }
 

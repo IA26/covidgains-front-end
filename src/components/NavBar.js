@@ -3,33 +3,41 @@ import {NavLink} from 'react-router-dom'
 
 const NavBar = (props) => {
 
+  let handleLogoutNav = (e) => {
+    props.handleLogout()
+  }
+  // console.log(props)
   return(
-    <ul className="nav">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <div className="collapse navbar-collapse" id="navbarNav">
+      <ul className="navbar-nav">
       {props.token ? null :
-      <li>
-        <NavLink to="/">Home</NavLink>
+      <li className="nav-item">
+        <NavLink to="/" className="nav-link" activeClassName="" >Home</NavLink>
       </li>}
       {props.token ? null :
-      <li>
-        <NavLink to="/login">Login</NavLink>
+      <li className="nav-item">
+        <NavLink to="/login" className="nav-link" >Login</NavLink>
       </li>}
       {props.token ? null :
-      <li>
-        <NavLink to="/register">Register</NavLink>
+      <li className="nav-item" >
+        <NavLink to="/register" className="nav-link">Register</NavLink>
       </li>}
       {props.token ? 
-      <li>
-        <NavLink to="/equipments">Equipment</NavLink>
+      <li className="nav-item">
+        <NavLink to="/equipments" className="nav-link">Equipment</NavLink>
       </li> : null}
       {props.token ? 
-      <li>
-        <NavLink to="/profile">Profile</NavLink>
+      <li className="nav-item">
+        <NavLink to="/profile" className="nav-link">Profile</NavLink>
       </li> : null}
       {props.token ?
-      <li>
-      <NavLink to="/logout">Logout</NavLink>
+      <li className="nav-item">
+      <NavLink to="/" activeClassName="" onClick={handleLogoutNav} className="nav-link">Logout</NavLink>
       </li> :null}
     </ul>
+    </div>
+  </nav>
   )
 };
 

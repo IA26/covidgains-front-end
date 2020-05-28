@@ -1,5 +1,10 @@
-.App {
+.centered {
   text-align: center;
+}
+
+.centered-image {
+  display:block;
+  margin:auto;
 }
 
 .App-logo {
@@ -37,15 +42,15 @@
   }
 }
 
-.nav {
+/* .nav {
   list-style-type: none;
   float: left;
   margin: 0;
   padding: 0;
   border-right: 1px solid #bbb;
-}
+} */
 
-.equipment-picture {
+/* .equipment-picture {
   text-align: center;
   border: grey solid 1px;
   padding: 1rem;
@@ -53,13 +58,78 @@
   height: 25rem;
   display: inline-grid;
   margin: 1rem 2rem;
-}
-
+} */
+/* 
 #all-equipment {
-  margin: 2rem;
+  margin: 2rem; 
   float: left;
+} */
+#form {
+  text-align: center;
 }
 
 .purchase-btn {
   text-align: center;
+}
+
+.card-columns {
+  display: inline-block;
+  column-break-inside: avoid;
+} 
+/* 
+#navbar {
+  position: fixed
+} */
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
+
+.card-img-top {
+  /* object-fit: cover; */
+  max-width: 100%;
+  width: auto !important;
+  max-height:100%;
+}
+
+.form-inline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+#form {
+  /* display: block; */
+  width: 700px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.profile-image {
+  object-fit: cover;
+  max-width: 100%;
+  width: auto !important;
+  max-height:100%;
+}
+
+.list-element {
+  height: 100px;
+  margin: 10px;
+}
+
+.container {
+  margin-right: auto !important;
+  margin-left: auto !important;
 }
