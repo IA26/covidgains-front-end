@@ -50,7 +50,7 @@ class UserProf extends Component {
                         <h1>Welcome to your profile, {this.props.user.username}</h1>
                         <h2>Your previous orders are listed down below</h2>
                     </div>
-                     <ul className="list-unstyled" id="user-list">
+                     <ul className="list-unstyled">
                          {list}
                      </ul>
                   </div>
